@@ -18,7 +18,10 @@ void main() {
     });
 
     test('maps 500 to ServerFailure keeping status code', () {
-      expect(badResponse(500).toFailure(), isA<ServerFailure>().having((f) => f.statusCode, 'statusCode', 500));
+      expect(
+        badResponse(500).toFailure(),
+        isA<ServerFailure>().having((f) => f.statusCode, 'statusCode', 500),
+      );
     });
 
     test('maps receive timeout to TimeoutFailure', () {
@@ -30,7 +33,10 @@ void main() {
     });
 
     test('maps connection error to NetworkFailure', () {
-      final exception = DioException.connectionError(requestOptions: requestOptions, reason: 'offline');
+      final exception = DioException.connectionError(
+        requestOptions: requestOptions,
+        reason: 'offline',
+      );
       expect(exception.toFailure(), isA<NetworkFailure>());
     });
   });
