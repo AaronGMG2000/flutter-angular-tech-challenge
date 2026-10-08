@@ -1,7 +1,7 @@
 import 'package:catalog/core/theme/index.dart';
 import 'package:flutter/material.dart';
 
-const int _skeletonCount = 6;
+const int _skeletonCount = 9;
 
 class ProductGridSkeleton extends StatelessWidget {
   const ProductGridSkeleton({super.key});
