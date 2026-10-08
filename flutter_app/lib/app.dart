@@ -10,6 +10,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => AppLang.of(context).appTitle,
       localizationsDelegates: AppLang.localizationsDelegates,
       supportedLocales: AppLang.supportedLocales,
