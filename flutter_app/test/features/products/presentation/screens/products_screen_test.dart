@@ -4,12 +4,15 @@ import 'package:catalog/core/error/failure.dart';
 import 'package:catalog/core/theme/app_theme.dart';
 import 'package:catalog/features/products/data/repositories/product_repository_impl.dart';
 import 'package:catalog/features/products/domain/entities/product.dart';
+import 'package:catalog/features/products/domain/entities/product_category.dart';
 import 'package:catalog/features/products/domain/entities/product_page.dart';
 import 'package:catalog/features/products/domain/repositories/product_repository.dart';
 import 'package:catalog/features/products/presentation/screens/products_screen.dart';
 import 'package:catalog/features/products/presentation/widgets/load_more_indicator.dart';
 import 'package:catalog/features/products/presentation/widgets/product_card.dart';
 import 'package:catalog/features/products/presentation/widgets/product_grid_skeleton.dart';
+import 'package:catalog/features/products/presentation/widgets/product_list_skeleton.dart';
+import 'package:catalog/features/products/presentation/widgets/product_list_tile.dart';
 import 'package:catalog/l10n/app_lang.dart';
 import 'package:catalog/l10n/app_lang_es.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +40,14 @@ void main() {
   );
   const page = ProductPage(items: [product], total: 1, skip: 0, limit: 20);
 
-  setUp(() => repository = _MockProductRepository());
+  setUp(() {
+    repository = _MockProductRepository();
+    when(() => repository.getCategories()).thenAnswer(
+      (_) async => const [
+        ProductCategory(slug: 'smartphones', name: 'Smartphones'),
+      ],
+    );
+  });
 
   Future<void> pumpScreen(WidgetTester tester) {
     return tester.pumpWidget(
@@ -124,7 +134,10 @@ void main() {
     await tester.scrollUntilVisible(
       find.text('Product 40'),
       500,
-      scrollable: find.byType(Scrollable),
+      scrollable: find.descendant(
+        of: find.byType(CustomScrollView),
+        matching: find.byType(Scrollable),
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -143,5 +156,77 @@ void main() {
 
     expect(find.text(lang.emptyTitle), findsOneWidget);
     expect(find.byType(ProductCard), findsNothing);
+  });
+
+  testWidgets('searches after the debounce and shows the result list', (
+    tester,
+  ) async {
+    stubProducts(() async => page);
+    when(() => repository.searchProducts('mascara', skip: 0, limit: 0))
+        .thenAnswer((_) async => page);
+
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'mascara');
+    await tester.pump();
+
+    expect(find.byType(ProductListSkeleton), findsOneWidget);
+    expect(find.text(lang.searching('mascara')), findsOneWidget);
+    verifyNever(
+      () => repository.searchProducts(
+        any(),
+        skip: any(named: 'skip'),
+        limit: any(named: 'limit'),
+      ),
+    );
+
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProductListTile), findsOneWidget);
+    expect(find.text(lang.searchResultsCount(1, 'mascara')), findsOneWidget);
+    verify(() => repository.searchProducts('mascara', skip: 0, limit: 0))
+        .called(1);
+  });
+
+  testWidgets('empty search offers to clear the filters', (tester) async {
+    stubProducts(() async => page);
+    when(() => repository.searchProducts('zzz', skip: 0, limit: 0)).thenAnswer(
+      (_) async => const ProductPage(items: [], total: 0, skip: 0, limit: 0),
+    );
+
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'zzz');
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+
+    expect(find.text(lang.emptyMessage('zzz')), findsOneWidget);
+
+    await tester.tap(find.text(lang.clearSearch));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProductCard), findsOneWidget);
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller?.text,
+      isEmpty,
+    );
+  });
+
+  testWidgets('tapping a category chip loads that category', (tester) async {
+    stubProducts(() async => page);
+    when(
+      () => repository.getProductsByCategory('smartphones', skip: 0, limit: 20),
+    ).thenAnswer((_) async => page);
+
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Smartphones'));
+    await tester.pumpAndSettle();
+
+    verify(
+      () => repository.getProductsByCategory('smartphones', skip: 0, limit: 20),
+    ).called(1);
+    expect(find.byIcon(Icons.close), findsOneWidget);
   });
 }
