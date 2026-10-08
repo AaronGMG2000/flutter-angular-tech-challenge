@@ -61,12 +61,14 @@ abstract final class AppSizes {
   static const double loadMoreRowHeight = 72;
   static const double stateIcon = 28;
   static const double productCardHeight = 204;
+  static const double inlineSpinner = 16;
 }
 
 abstract final class AppBorders {
   static const double thin = 1;
   static const double focus = 2;
   static const double badge = 2;
+  static const double spinner = 2;
 }
 
 abstract final class AppShadows {

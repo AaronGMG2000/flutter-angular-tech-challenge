@@ -44,7 +44,11 @@ class ProductsScreen extends ConsumerWidget {
                 iconColor: colors.onAccent,
                 title: lang.emptyTitle,
               )
-            : ProductGrid(products: page.items),
+            : ProductGrid(
+                page: page,
+                onLoadMore: () =>
+                    ref.read(productListProvider.notifier).loadMore(),
+              ),
       ),
     );
   }
