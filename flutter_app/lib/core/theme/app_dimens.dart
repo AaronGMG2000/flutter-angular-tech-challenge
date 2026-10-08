@@ -20,6 +20,12 @@ abstract final class AppSpacing {
   static const double summaryMargin = 12;
   static const double summaryPadding = 20;
   static const double badgeOffset = -2;
+  static const double cardContentTop = 10;
+  static const double cardContentGap = 6;
+  static const double ratingGap = 3;
+  static const double statePadding = 32;
+  static const double stateGap = 16;
+  static const double stateActionHorizontal = 28;
 }
 
 abstract final class AppRadius {
@@ -53,6 +59,8 @@ abstract final class AppSizes {
   static const double detailImage = 200;
   static const double loadMoreSkeletonHeight = 120;
   static const double loadMoreRowHeight = 72;
+  static const double stateIcon = 28;
+  static const double productCardHeight = 204;
 }
 
 abstract final class AppBorders {

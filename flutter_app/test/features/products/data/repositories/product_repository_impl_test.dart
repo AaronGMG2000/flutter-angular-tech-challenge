@@ -63,8 +63,9 @@ void main() {
   });
 
   test('malformed payload becomes ParseFailure', () async {
-    when(() => remote.fetchProductById(1))
-        .thenAnswer((_) async => ProductDto.fromJson({'id': '1'}));
+    when(
+      () => remote.fetchProductById(1),
+    ).thenAnswer((_) async => ProductDto.fromJson({'id': '1'}));
 
     await expectLater(
       () => repository.getProductById(1),

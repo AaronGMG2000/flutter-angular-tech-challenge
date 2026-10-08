@@ -49,3 +49,5 @@ app.*.map.json
 *.g.theme.dart
 *.mocks.dart
 /lib/l10n/app_lang*.dart
+# Widget Preview related
+.widget_preview/
