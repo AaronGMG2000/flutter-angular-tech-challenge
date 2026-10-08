@@ -7,6 +7,7 @@ import 'package:catalog/features/products/domain/entities/product.dart';
 import 'package:catalog/features/products/domain/entities/product_page.dart';
 import 'package:catalog/features/products/domain/repositories/product_repository.dart';
 import 'package:catalog/features/products/presentation/screens/products_screen.dart';
+import 'package:catalog/features/products/presentation/widgets/load_more_indicator.dart';
 import 'package:catalog/features/products/presentation/widgets/product_card.dart';
 import 'package:catalog/features/products/presentation/widgets/product_grid_skeleton.dart';
 import 'package:catalog/l10n/app_lang.dart';
@@ -95,6 +96,41 @@ void main() {
 
     expect(calls, 2);
     expect(find.text(product.title), findsOneWidget);
+  });
+
+  testWidgets('loads next page when scrolling near the end', (tester) async {
+    List<Product> productsFrom(int start) => List.generate(
+      20,
+      (index) => product.copyWith(
+        id: start + index,
+        title: 'Product ${start + index}',
+      ),
+    );
+    stubProducts(
+      () async =>
+          ProductPage(items: productsFrom(1), total: 40, skip: 0, limit: 20),
+    );
+    when(() => repository.getProducts(skip: 20, limit: 20)).thenAnswer(
+      (_) async =>
+          ProductPage(items: productsFrom(21), total: 40, skip: 20, limit: 20),
+    );
+
+    await pumpScreen(tester);
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(LoadMoreIndicator, skipOffstage: false), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('Product 40'),
+      500,
+      scrollable: find.byType(Scrollable),
+    );
+    await tester.pumpAndSettle();
+
+    verify(() => repository.getProducts(skip: 20, limit: 20)).called(1);
+    expect(find.text('Product 40'), findsOneWidget);
+    expect(find.byType(LoadMoreIndicator, skipOffstage: false), findsNothing);
   });
 
   testWidgets('shows empty view when the page has no items', (tester) async {
