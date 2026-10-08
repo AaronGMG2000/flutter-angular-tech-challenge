@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract final class AppSpacing {
   static const double screenHorizontal = 16;
+  static const double headerTop = 8;
+  static const double headerGap = 12;
   static const double appBarStart = 20;
   static const double appBarEnd = 16;
   static const double gridGap = 12;
@@ -23,6 +25,8 @@ abstract final class AppSpacing {
   static const double cardContentTop = 10;
   static const double cardContentGap = 6;
   static const double ratingGap = 3;
+  static const double tileGap = 12;
+  static const double tileTextGap = 4;
   static const double statePadding = 32;
   static const double stateGap = 16;
   static const double stateActionHorizontal = 28;
@@ -54,6 +58,7 @@ abstract final class AppSizes {
   static const double productCardSkeletonHeight = 196;
   static const double listTileThumbnail = 72;
   static const double listTileSkeletonHeight = 94;
+  static const double chipCloseIcon = 16;
   static const double cartTileThumbnail = 64;
   static const double detailHeaderHeight = 220;
   static const double detailImage = 200;
@@ -80,4 +85,5 @@ abstract final class AppShadows {
 abstract final class AppDurations {
   static const Duration entrance = Duration(milliseconds: 200);
   static const Duration badgeBounce = Duration(milliseconds: 800);
+  static const Duration chipScroll = Duration(milliseconds: 300);
 }

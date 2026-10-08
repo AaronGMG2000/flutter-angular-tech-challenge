@@ -10,6 +10,12 @@
       "query": { "type": "String" }
     }
   },
+  "searching": "Buscando “{query}”…",
+  "@searching": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
   "searchingIn": "Buscando “{query}” en {category}…",
   "@searchingIn": {
     "placeholders": {
@@ -35,6 +41,7 @@
     }
   },
   "clearSearch": "Limpiar búsqueda",
+  "clearSearchTooltip": "Limpiar",
   "inStock": "En stock · {stock}",
   "@inStock": {
     "placeholders": {
