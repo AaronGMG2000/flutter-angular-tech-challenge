@@ -1,0 +1,69 @@
+{
+  "@@locale": "es",
+  "appTitle": "Mini catálogo",
+  "searchHint": "Buscar productos",
+  "categoryAll": "Todas",
+  "searchResultsCount": "{count, plural, =1{1 resultado para “{query}”} other{{count} resultados para “{query}”}}",
+  "@searchResultsCount": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "query": { "type": "String" }
+    }
+  },
+  "searchingIn": "Buscando “{query}” en {category}…",
+  "@searchingIn": {
+    "placeholders": {
+      "query": { "type": "String" },
+      "category": { "type": "String" }
+    }
+  },
+  "loadingMore": "Cargando más productos · {loaded} de {total}",
+  "@loadingMore": {
+    "placeholders": {
+      "loaded": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "productsErrorTitle": "No pudimos cargar los productos",
+  "productsErrorMessage": "Revisa tu conexión e inténtalo de nuevo.",
+  "retry": "Reintentar",
+  "emptyTitle": "Sin resultados",
+  "emptyMessage": "No encontramos productos para “{query}”. Prueba con otra palabra o categoría.",
+  "@emptyMessage": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
+  "clearSearch": "Limpiar búsqueda",
+  "inStock": "En stock · {stock}",
+  "@inStock": {
+    "placeholders": {
+      "stock": { "type": "int" }
+    }
+  },
+  "addToCart": "Agregar al carrito",
+  "productErrorTitle": "No pudimos cargar este producto",
+  "productErrorMessage": "El producto #{id} no existe o no está disponible.",
+  "@productErrorMessage": {
+    "placeholders": {
+      "id": { "type": "int" }
+    }
+  },
+  "backToCatalog": "Volver al catálogo",
+  "cartTitle": "Carrito",
+  "cartUnits": "{count, plural, =1{1 unidad} other{{count} unidades}}",
+  "@cartUnits": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "cartSubtotal": "Subtotal ({count})",
+  "@cartSubtotal": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "cartTotal": "Total",
+  "clearCart": "Vaciar carrito",
+  "cartEmpty": "Tu carrito está vacío"
+}
