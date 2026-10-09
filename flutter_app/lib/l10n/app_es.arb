@@ -57,6 +57,7 @@
     }
   },
   "backToCatalog": "Volver al catálogo",
+  "back": "Volver",
   "cartTitle": "Carrito",
   "cartUnits": "{count, plural, =1{1 unidad} other{{count} unidades}}",
   "@cartUnits": {

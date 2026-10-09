@@ -17,6 +17,11 @@ abstract final class AppSpacing {
   static const double sheetVertical = 24;
   static const double sheetGap = 14;
   static const double sheetOverlap = 20;
+  static const double tagHorizontal = 10;
+  static const double discountHorizontal = 8;
+  static const double discountVertical = 3;
+  static const double priceRowGap = 10;
+  static const double stateActionGap = 10;
   static const double bottomBarTop = 14;
   static const double bottomBarBottom = 30;
   static const double summaryMargin = 12;
@@ -38,6 +43,7 @@ abstract final class AppRadius {
   static const double sheet = 24;
   static const double cartSummary = 30;
   static const double pill = 100;
+  static const double skeletonLine = 8;
 }
 
 abstract final class AppSizes {
@@ -62,6 +68,10 @@ abstract final class AppSizes {
   static const double cartTileThumbnail = 64;
   static const double detailHeaderHeight = 220;
   static const double detailImage = 200;
+  static const double detailRatingStar = 12;
+  static const double skeletonTagWidth = 140;
+  static const double skeletonTitleHeight = 28;
+  static const double skeletonLineHeight = 14;
   static const double loadMoreSkeletonHeight = 120;
   static const double loadMoreRowHeight = 72;
   static const double stateIcon = 28;

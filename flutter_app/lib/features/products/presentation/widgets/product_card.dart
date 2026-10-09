@@ -4,66 +4,70 @@ import 'package:catalog/features/products/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({required this.product, super.key});
+  const ProductCard({required this.product, required this.onTap, super.key});
 
   final Product product;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
 
     return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: ColoredBox(
-              color: colors.imageSurface,
-              child: Center(
-                child: Image.network(
-                  product.thumbnail,
-                  width: AppSizes.productCardImage,
-                  height: AppSizes.productCardImage,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.image_not_supported,
-                    color: colors.textTertiary,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ColoredBox(
+                color: colors.imageSurface,
+                child: Center(
+                  child: Image.network(
+                    product.thumbnail,
+                    width: AppSizes.productCardImage,
+                    height: AppSizes.productCardImage,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => Icon(
+                      Icons.image_not_supported,
+                      color: colors.textTertiary,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.cardContent,
-              AppSpacing.cardContentTop,
-              AppSpacing.cardContent,
-              AppSpacing.cardContent,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.cardContent,
+                AppSpacing.cardContentTop,
+                AppSpacing.cardContent,
+                AppSpacing.cardContent,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: AppSpacing.cardContentGap,
+                children: [
+                  Text(
+                    product.title,
+                    style: AppTextStyles.productCardTitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppFormats.price(product.price),
+                        style: AppTextStyles.priceSmall,
+                      ),
+                      ProductRating(value: product.rating),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: AppSpacing.cardContentGap,
-              children: [
-                Text(
-                  product.title,
-                  style: AppTextStyles.productCardTitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppFormats.price(product.price),
-                      style: AppTextStyles.priceSmall,
-                    ),
-                    ProductRating(value: product.rating),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
