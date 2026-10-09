@@ -12,6 +12,7 @@ class _MockProductRepository extends Mock implements ProductRepository {}
 void main() {
   testWidgets('App arranca y muestra el título', (tester) async {
     final repository = _MockProductRepository();
+    when(() => repository.getCategories()).thenAnswer((_) async => const []);
     when(() => repository.getProducts(skip: 0, limit: 20)).thenAnswer(
       (_) async => const ProductPage(items: [], total: 0, skip: 0, limit: 20),
     );
