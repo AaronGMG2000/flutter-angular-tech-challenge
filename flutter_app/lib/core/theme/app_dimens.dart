@@ -48,6 +48,12 @@ abstract final class AppSpacing {
   static const double cartCountEnd = -12;
 }
 
+abstract final class AppLayout {
+  static const int gridColumns = 2;
+  static const int cardTitleLines = 2;
+  static const double centeredAlignment = 0.5;
+}
+
 abstract final class AppRadius {
   static const double thumbnail = 14;
   static const double card = 20;
@@ -71,9 +77,7 @@ abstract final class AppSizes {
   static const double themeIcon = 18;
   static const double ratingStar = 10;
   static const double stateIconCircle = 72;
-  static const double productCardImageArea = 120;
   static const double productCardImage = 104;
-  static const double productCardSkeletonHeight = 196;
   static const double listTileThumbnail = 72;
   static const double listTileSkeletonHeight = 94;
   static const double chipCloseIcon = 16;
@@ -109,8 +113,6 @@ abstract final class AppShadows {
 }
 
 abstract final class AppDurations {
-  static const Duration entrance = Duration(milliseconds: 200);
-  static const Duration badgeBounce = Duration(milliseconds: 800);
   static const Duration chipScroll = Duration(milliseconds: 300);
   static const Duration toast = Duration(milliseconds: 1600);
 }

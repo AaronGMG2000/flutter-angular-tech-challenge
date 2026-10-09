@@ -14,7 +14,7 @@ class ProductGridSkeleton extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.screenHorizontal),
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: AppLayout.gridColumns,
         mainAxisSpacing: AppSpacing.gridGap,
         crossAxisSpacing: AppSpacing.gridGap,
         mainAxisExtent: AppSizes.productCardHeight,

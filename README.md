@@ -135,12 +135,12 @@ Todo el estado de negocio vive en providers generados con `riverpod_generator`. 
 #### Decisiones técnicas
 
 - **freezed + json_serializable para los modelos.** Generan `copyWith`, igualdad por valor, `hashCode` y `fromJson`. Escribirlo a mano son decenas de líneas por clase, y olvidar un campo en `==` rompe la detección de cambios de Riverpod sin ningún aviso. La igualdad por valor es la que permite comparar estados del carrito.
-- **Errores tipados.** `Failure` es una clase sellada, así que la pantalla usa un `switch` exhaustivo y distingue "sin conexión" de "producto no encontrado". La política de reintentos del `ProviderScope` repite dos veces los errores de red y 5xx con espera creciente.
+- **Errores tipados.** El repositorio convierte toda excepción de Dio en una `Failure` sellada (`NetworkFailure`, `NotFoundFailure`, `ServerFailure`…), así la UI nunca recibe una excepción cruda y el detalle distingue "producto no encontrado" de un error de conexión. La política de reintentos del `ProviderScope` repite dos veces los errores de red y 5xx con espera creciente.
 - **Debounce sin `Timer`.** `ProductList.build()` espera 400 ms cuando hay texto. Si llega otra letra, Riverpod descarta ese build y empieza otro; la cancelación se detecta con `ref.onDispose`, así que solo la última búsqueda llega a la red.
 - **Búsqueda combinada con categoría.** DummyJSON no filtra por texto y categoría en la misma llamada. Con texto se piden todos los resultados de `/products/search` (son pocos) y se filtra la categoría en el cliente; sin texto se usa `/products/category/{slug}` con paginación.
 - **Scroll infinito.** `loadMore()` agrega la página siguiente a la lista existente. Si el usuario cambia el filtro mientras carga, la respuesta tardía se descarta.
 - **Carrito persistente.** Cada acción crea una lista nueva. El notifier se guarda a sí mismo con `listenSelf` en `shared_preferences`, así ninguna acción tiene que acordarse de persistir. El botón del carrito (`CartBadge`) muestra el total y la cantidad de productos en la barra superior del listado, del detalle y del carrito.
-- **Diseño con tokens.** Colores en una `ThemeExtension` generada con `theme_extensions_builder` (`context.colors`) y medidas en constantes (`AppSpacing`, `AppSizes`); los widgets no tienen valores sueltos.
+- **Diseño con tokens.** Colores en una `ThemeExtension` generada con `theme_extensions_builder` (`context.colors`) y medidas en constantes (`AppSpacing`, `AppSizes`, `AppLayout`); los widgets no tienen valores sueltos.
 - **Textos con `gen-l10n`.** Todos los textos visibles están en `app_es.arb`.
 
 ### Angular
@@ -175,7 +175,7 @@ src/app/
 
 - `OrdersService` devuelve `Observable<Cart[]>` y `Observable<Cart>`. Ningún componente usa `HttpClient`.
 - `OrdersPageComponent` carga con `rxResource`, que expone `value()`, `isLoading()`, `error()` y `reload()` como signals y se desuscribe solo. No hay ningún `subscribe()` manual en la app.
-- El filtro son dos signals (`minTotal`, `userId`) y la lista visible es un `computed`. Se puede combinar total mínimo con usuario.
+- El filtro son dos signals (`minTotal`, `userId`) y la lista visible es un `computed`. Se puede combinar total mínimo con usuario. El total mínimo se compara con el total con descuento (`discountedTotal`), que es el precio que muestra cada tarjeta.
 - El detalle recibe el `id` de la ruta como `input()` gracias a `withComponentInputBinding()` y vuelve a cargar cuando cambia.
 - Los componentes presentacionales usan `ChangeDetectionStrategy.OnPush` y el nuevo control flow (`@if`, `@for` con `track`).
 
@@ -189,11 +189,12 @@ src/app/
 
 | Concepto | Flutter | Angular |
 |---|---|---|
-| Acceso a datos | `ProductRepository` inyectado con un provider | `OrdersService` con `providedIn: 'root'` |
+| Servicio ≈ repositorio | `ProductRepository` inyectado con un provider | `OrdersService` con `providedIn: 'root'` |
+| Signal / Observable ≈ provider | Providers de Riverpod que exponen estado | `signal`, `computed` y Observables del servicio |
 | Estado asíncrono | `AsyncNotifier` / `FutureProvider` → `AsyncValue` | `rxResource` → `value`, `isLoading`, `error` |
 | Estado derivado | Provider que hace `ref.watch` de otros | `computed` |
 | Suscripción en la vista | `ref.watch` en `build` | leer un signal en la plantilla |
-| Vista sin estado | Widget que recibe datos y callbacks | Componente presentacional con `input()` / `output()` y `OnPush` |
+| Componente presentacional ≈ widget sin estado | Widget que recibe datos y callbacks | Componente presentacional con `input()` / `output()` y `OnPush` |
 | Inyección en tests | `overrides` en `ProviderContainer` / `ProviderScope` | `providers` en `TestBed` + `HttpTestingController` |
 | Navegación | `go_router`, `/products/:id` | Router con `loadComponent`, `/orders/:id` |
 

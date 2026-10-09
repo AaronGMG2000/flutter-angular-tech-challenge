@@ -11,7 +11,7 @@ import 'package:mocktail/mocktail.dart';
 class _MockProductRepository extends Mock implements ProductRepository {}
 
 void main() {
-  testWidgets('App arranca y muestra el título', (tester) async {
+  testWidgets('app starts and shows the title', (tester) async {
     final repository = _MockProductRepository();
     when(() => repository.getCategories()).thenAnswer((_) async => const []);
     when(() => repository.getProducts(skip: 0, limit: 20)).thenAnswer(

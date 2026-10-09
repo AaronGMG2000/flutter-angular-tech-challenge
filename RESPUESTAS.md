@@ -47,7 +47,7 @@ Un `StatelessWidget` depende únicamente de lo que recibe en el constructor, mie
 
 #### 5. ¿Por qué es preferible extraer un widget a una clase propia en lugar de un método `_buildAlgo()` que retorna un `Widget`?
 
-Un método `_build…()` es una función que se ejecuta cada vez que el widget padre se reconstruye. En cambio, si creamos una clase propia, el widget solo se reconstruye cuando es necesario y no en cada cambio de estado de la página padre.
+Un método `_build…()` es una función que se ejecuta cada vez que el widget padre se reconstruye. En cambio, si creamos una clase propia, el widget solo se reconstruye cuando es necesario y no en cada cambio de estado de la página padre. Además puede ser `const`, se puede reutilizar y se puede probar por separado.
 
 ### Riverpod
 
@@ -69,9 +69,9 @@ No es correcto usar `ref.read` en `build`: solo mostraría el valor inicial y no
 #### 8. ¿Cuándo usarías un `Provider`, un `FutureProvider`, un `Notifier` y un `AsyncNotifier`?
 
 - **`Provider`**: para valores síncronos que no cambian por acciones del usuario.
-- **`FutureProvider`**: una función que devuelve un `Future`, por ejemplo una llamada a una API.
-- **`Notifier`**: un objeto que extiende de `NotifierBase` y se usa para cambiar el estado de un provider. No maneja estados asíncronos.
-- **`AsyncNotifier`**: un objeto que extiende de `AsyncNotifierBase` y se usa para cambiar el estado de un provider. Maneja estados asíncronos; por ejemplo, el buscador de la app usa un `AsyncNotifier` para manejar el estado de la búsqueda.
+- **`FutureProvider`**: para cargar datos asíncronos que solo se leen, por ejemplo una llamada a una API como el detalle de un producto.
+- **`Notifier`**: para un estado síncrono que se modifica con métodos, por ejemplo el carrito o el texto del buscador. No maneja estados asíncronos.
+- **`AsyncNotifier`**: para un estado asíncrono que además se modifica con métodos. Por ejemplo, el listado de productos de la app carga los datos y tiene un método para cargar la siguiente página.
 
 #### 9. ¿Qué hace el modificador `autoDispose` y qué problema evita? ¿Y `family`?
 

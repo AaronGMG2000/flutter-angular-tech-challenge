@@ -54,7 +54,7 @@ void _centerChip(BuildContext chipContext) {
     if (!chipContext.mounted) return;
     Scrollable.ensureVisible(
       chipContext,
-      alignment: 0.5,
+      alignment: AppLayout.centeredAlignment,
       duration: AppDurations.chipScroll,
       curve: Curves.easeOutCubic,
     );
