@@ -1,0 +1,124 @@
+<section class="flex flex-col gap-6">
+  <header class="flex flex-col gap-2.5">
+    <nav class="flex items-center gap-2 text-sm text-ink-2" aria-label="Ruta">
+      <a routerLink="/orders" class="text-link hover:underline">Pedidos</a>
+      <span class="icon text-[14px]" aria-hidden="true">chevron_right</span>
+      <span aria-current="page">#{{ orderId() }}</span>
+    </nav>
+    <div class="flex flex-wrap items-center gap-3">
+      <h1 class="font-display text-5xl leading-none font-extrabold">Pedido #{{ orderId() }}</h1>
+      @if (order.hasValue()) {
+        <span
+          class="flex h-7 items-center gap-1.5 rounded-full bg-warm px-3 text-[13px] font-medium"
+        >
+          <span class="icon text-[14px]" aria-hidden="true">person</span>
+          Usuario {{ order.value().userId }}
+        </span>
+      }
+    </div>
+  </header>
+
+  @if (order.isLoading()) {
+    <div class="flex flex-col gap-4" aria-busy="true">
+      <p class="flex items-center gap-2.5 text-sm text-ink-2">
+        <span class="size-4 animate-spin rounded-full border-2 border-line border-t-link"></span>
+        Cargando pedido…
+      </p>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        @for (item of [1, 2, 3, 4]; track item) {
+          <div class="h-28 rounded-card bg-skeleton"></div>
+        }
+      </div>
+      <div class="h-72 rounded-card bg-skeleton"></div>
+    </div>
+  } @else if (order.error()) {
+    @if (notFound()) {
+      <app-error-banner
+        title="Pedido no encontrado"
+        [message]="'Error 404 · el pedido #' + orderId() + ' no existe.'"
+        actionLabel="Volver a pedidos"
+        (action)="backToOrders()"
+      />
+    } @else {
+      <app-error-banner
+        title="No pudimos cargar el pedido"
+        [message]="
+          errorStatus()
+            ? 'Error ' + errorStatus() + ' · el servidor no respondió.'
+            : 'Revisa tu conexión e inténtalo de nuevo.'
+        "
+        actionLabel="Reintentar"
+        actionIcon="refresh"
+        (action)="order.reload()"
+      />
+    }
+  } @else if (order.hasValue()) {
+    @let detail = order.value();
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="flex flex-col gap-2 rounded-card border border-line bg-surface p-5">
+        <span class="text-[13px] text-ink-2">Productos</span>
+        <span class="font-display text-5xl leading-[0.9] font-extrabold">
+          {{ detail.totalProducts }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-2 rounded-card border border-line bg-surface p-5">
+        <span class="text-[13px] text-ink-2">Unidades</span>
+        <span class="font-display text-5xl leading-[0.9] font-extrabold">
+          {{ detail.totalQuantity }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-2 rounded-card border border-line bg-surface p-5">
+        <span class="text-[13px] text-ink-2">Total sin descuento</span>
+        <span class="font-display text-5xl leading-[0.9] font-extrabold text-icon">
+          {{ detail.total | money }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-2 rounded-card bg-kpi p-5 text-white">
+        <span class="text-[13px] text-white/70">
+          Total con descuento · {{ detail.total | discount: detail.discountedTotal }}
+        </span>
+        <span class="font-display text-5xl leading-[0.9] font-extrabold text-accent">
+          {{ detail.discountedTotal | money }}
+        </span>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto rounded-card border border-line bg-surface">
+      <table class="w-full min-w-[640px] border-collapse text-sm">
+        <thead>
+          <tr class="border-b border-line bg-table-head text-xs font-medium text-icon">
+            <th scope="col" class="w-[43%] px-5 py-3.5 text-left font-medium">Producto</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-medium">Precio</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-medium">Cantidad</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-medium">Descuento</th>
+            <th scope="col" class="px-5 py-3.5 text-right font-medium">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (line of detail.products; track line.id) {
+            <tr class="border-b border-line last:border-b-0">
+              <td class="px-5 py-3">
+                <span class="flex items-center gap-3 font-semibold">
+                  <span
+                    class="flex size-11 flex-none items-center justify-center rounded-input bg-thumb"
+                  >
+                    <img [src]="line.thumbnail" alt="" class="size-9 object-contain" />
+                  </span>
+                  {{ line.title }}
+                </span>
+              </td>
+              <td class="px-5 py-3 text-right text-ink-2 tabular-nums">{{ line.price | money }}</td>
+              <td class="px-5 py-3 text-right tabular-nums">{{ line.quantity }}</td>
+              <td class="px-5 py-3 text-right font-medium text-success-strong tabular-nums">
+                -{{ line.discountPercentage | number: '1.2-2' }} %
+              </td>
+              <td class="px-5 py-3 text-right font-semibold tabular-nums">
+                {{ line.total | money }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

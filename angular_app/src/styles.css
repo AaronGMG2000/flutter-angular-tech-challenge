@@ -29,6 +29,9 @@
   --app-outline: #042914;
   --app-success-bg: #e3faed;
   --app-success: #034f24;
+  --app-success-strong: #079f49;
+  --app-kpi: #042914;
+  --app-table-head: #fbfbf8;
   --app-error-bg: #fbf0f0;
   --app-error-line: #febdbd;
   --app-error-circle: #fbe2e2;
@@ -62,6 +65,9 @@
   --color-outline: var(--app-outline);
   --color-success-bg: var(--app-success-bg);
   --color-success: var(--app-success);
+  --color-success-strong: var(--app-success-strong);
+  --color-kpi: var(--app-kpi);
+  --color-table-head: var(--app-table-head);
   --color-error-bg: var(--app-error-bg);
   --color-error-line: var(--app-error-line);
   --color-error-circle: var(--app-error-circle);

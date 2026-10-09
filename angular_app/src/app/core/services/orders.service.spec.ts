@@ -33,4 +33,12 @@ describe('OrdersService', () => {
 
     expect((await result).map((order) => order.id)).toEqual([1, 2]);
   });
+
+  it('requests one cart by id', async () => {
+    const result = firstValueFrom(service.getOrder(7));
+
+    http.expectOne('https://api.test/carts/7').flush(cart(7));
+
+    expect((await result).id).toBe(7);
+  });
 });
