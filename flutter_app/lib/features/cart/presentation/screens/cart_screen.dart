@@ -1,6 +1,7 @@
 import 'package:catalog/core/router/app_router.dart';
 import 'package:catalog/core/theme/index.dart';
 import 'package:catalog/features/cart/presentation/providers/cart_provider.dart';
+import 'package:catalog/features/cart/presentation/widgets/cart_badge.dart';
 import 'package:catalog/features/cart/presentation/widgets/cart_item_tile.dart';
 import 'package:catalog/features/cart/presentation/widgets/cart_summary.dart';
 import 'package:catalog/l10n/app_lang.dart';
@@ -22,15 +23,7 @@ class CartScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(lang.cartTitle),
         actionsPadding: const EdgeInsets.only(right: AppSpacing.appBarEnd),
-        actions: [
-          if (!cart.isEmpty)
-            Text(
-              lang.cartUnits(cart.totalItems),
-              style: AppTextStyles.caption.copyWith(
-                color: colors.textSecondary,
-              ),
-            ),
-        ],
+        actions: [CartBadge(borderColor: colors.background, opensCart: false)],
       ),
       body: cart.isEmpty
           ? StateView(

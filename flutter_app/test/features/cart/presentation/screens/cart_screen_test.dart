@@ -51,14 +51,7 @@ void main() {
           theme: AppTheme.light,
           localizationsDelegates: AppLang.localizationsDelegates,
           supportedLocales: AppLang.supportedLocales,
-          home: const Scaffold(
-            body: Column(
-              children: [
-                CartBadge(borderColor: Colors.white),
-                Expanded(child: CartScreen()),
-              ],
-            ),
-          ),
+          home: const CartScreen(),
         ),
       ),
     );
@@ -69,9 +62,15 @@ void main() {
     await pumpCart(tester, [mascara, lipstick]);
 
     expect(find.byType(CartItemTile), findsNWidgets(2));
-    expect(find.text(lang.cartUnits(3)), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(CartBadge),
+        matching: find.text(r'$32,97'),
+      ),
+      findsOneWidget,
+    );
     expect(find.text(lang.cartSubtotal(3)), findsOneWidget);
-    expect(find.text(r'$32,97'), findsNWidgets(2));
+    expect(find.text(r'$32,97'), findsNWidgets(3));
     expect(find.text('3'), findsOneWidget);
   });
 

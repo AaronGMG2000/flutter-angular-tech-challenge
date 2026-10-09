@@ -14,7 +14,7 @@ class ThemeToggleButton extends ConsumerWidget {
 
     return IconButton(
       tooltip: AppLang.of(context).toggleTheme,
-      onPressed: ref.read(themeModeProvider.notifier).toggle,
+      onPressed: () => ref.read(themeModeProvider.notifier).toggle(),
       style: IconButton.styleFrom(
         backgroundColor: Colors.transparent,
         foregroundColor: isDark ? colors.accent : colors.textPrimary,

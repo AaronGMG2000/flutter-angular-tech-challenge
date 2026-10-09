@@ -44,7 +44,8 @@ class _SearchFieldState extends ConsumerState<SearchField> {
 
     return TextField(
       controller: _controller,
-      onChanged: ref.read(searchQueryProvider.notifier).change,
+      onChanged: (value) =>
+          ref.read(searchQueryProvider.notifier).change(value),
       textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         hintText: lang.searchHint,
