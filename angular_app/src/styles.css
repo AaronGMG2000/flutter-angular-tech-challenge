@@ -1,3 +1,101 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Alumni Sans';
+  src: url('/fonts/AlumniSans.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --app-bg: #f7f5eb;
+  --app-surface: #ffffff;
+  --app-warm: #f5f2e5;
+  --app-thumb: #f5f2e5;
+  --app-sand: #e7debd;
+  --app-line: #ebe9e1;
+  --app-line-strong: #d4d2cb;
+  --app-skeleton: #ebe9e1;
+  --app-ink: #042914;
+  --app-ink-2: #504e49;
+  --app-ink-3: #929087;
+  --app-icon: #737168;
+  --app-link: #008379;
+  --app-focus: #00e5d4;
+  --app-bar: #042914;
+  --app-bar-line: #042914;
+  --app-primary: #042914;
+  --app-on-primary: #ffffff;
+  --app-outline: #042914;
+  --app-success-bg: #e3faed;
+  --app-success: #034f24;
+  --app-error-bg: #fbf0f0;
+  --app-error-line: #febdbd;
+  --app-error-circle: #fbe2e2;
+  --app-error-icon: #d40404;
+  --app-error-title: #510101;
+  --app-error-text: #790202;
+}
+
+@theme inline {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Alumni Sans', 'Arial Narrow', sans-serif;
+
+  --color-app: var(--app-bg);
+  --color-surface: var(--app-surface);
+  --color-warm: var(--app-warm);
+  --color-thumb: var(--app-thumb);
+  --color-sand: var(--app-sand);
+  --color-line: var(--app-line);
+  --color-line-strong: var(--app-line-strong);
+  --color-skeleton: var(--app-skeleton);
+  --color-ink: var(--app-ink);
+  --color-ink-2: var(--app-ink-2);
+  --color-ink-3: var(--app-ink-3);
+  --color-icon: var(--app-icon);
+  --color-link: var(--app-link);
+  --color-focus: var(--app-focus);
+  --color-bar: var(--app-bar);
+  --color-bar-line: var(--app-bar-line);
+  --color-primary: var(--app-primary);
+  --color-on-primary: var(--app-on-primary);
+  --color-outline: var(--app-outline);
+  --color-success-bg: var(--app-success-bg);
+  --color-success: var(--app-success);
+  --color-error-bg: var(--app-error-bg);
+  --color-error-line: var(--app-error-line);
+  --color-error-circle: var(--app-error-circle);
+  --color-error-icon: var(--app-error-icon);
+  --color-error-title: var(--app-error-title);
+  --color-error-text: var(--app-error-text);
+  --color-accent: #e8fb10;
+  --color-teal: #5ffff3;
+  --color-on-accent: #042914;
+
+  --radius-input: 12px;
+  --radius-card: 20px;
+
+  --shadow-card: 0 2px 4px rgb(4 41 20 / 0.04);
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.15em;
+  line-height: 1;
+  display: inline-block;
+  white-space: nowrap;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}

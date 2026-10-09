@@ -1,0 +1,102 @@
+<section class="flex flex-col gap-6">
+  <header class="flex flex-wrap items-end justify-between gap-6">
+    <div class="flex flex-col gap-1.5">
+      <h1 class="font-display text-5xl leading-none font-extrabold">Pedidos</h1>
+      @if (orders.hasValue()) {
+        <p class="text-sm text-ink-2">
+          Mostrando {{ filtered().length }} de {{ allOrders().length }} pedidos
+        </p>
+      }
+    </div>
+
+    <div class="flex flex-wrap items-end gap-3">
+      <label class="flex flex-col gap-1.5 text-xs font-medium text-ink-2">
+        Total mínimo
+        <span
+          class="flex h-11 w-45 items-center gap-2 rounded-input border border-line-strong bg-surface px-3.5 text-[15px] text-ink focus-within:border-focus focus-within:ring-1 focus-within:ring-focus"
+        >
+          <span class="text-ink-3" aria-hidden="true">$</span>
+          <input
+            #minInput
+            type="number"
+            min="0"
+            inputmode="decimal"
+            placeholder="0"
+            class="w-full bg-transparent outline-none"
+            [value]="minTotal() ?? ''"
+            (input)="setMinTotal(minInput.value)"
+          />
+        </span>
+      </label>
+
+      <label class="flex flex-col gap-1.5 text-xs font-medium text-ink-2">
+        Usuario
+        <select
+          #userSelect
+          class="h-11 w-45 rounded-input border border-line-strong bg-surface px-3 text-[15px] text-ink outline-none focus:border-focus focus:ring-1 focus:ring-focus"
+          (change)="setUserId(userSelect.value)"
+        >
+          <option value="" [selected]="userId() === null">Todos</option>
+          @for (id of userIds(); track id) {
+            <option [value]="id" [selected]="id === userId()">Usuario {{ id }}</option>
+          }
+        </select>
+      </label>
+
+      @if (hasFilters()) {
+        <button
+          type="button"
+          class="h-11 rounded-full px-4.5 text-sm font-medium text-link hover:underline"
+          (click)="clearFilters()"
+        >
+          Limpiar filtros
+        </button>
+      }
+    </div>
+  </header>
+
+  @if (orders.isLoading()) {
+    <div class="flex flex-col gap-4" aria-busy="true">
+      <p class="flex items-center gap-2.5 text-sm text-ink-2">
+        <span class="size-4 animate-spin rounded-full border-2 border-line border-t-link"></span>
+        Cargando pedidos…
+      </p>
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        @for (item of skeletons; track item) {
+          <div class="h-45 rounded-card bg-skeleton"></div>
+        }
+      </div>
+    </div>
+  } @else if (orders.error()) {
+    <app-error-banner
+      title="No pudimos cargar los pedidos"
+      [message]="errorMessage()"
+      actionLabel="Reintentar"
+      actionIcon="refresh"
+      (action)="orders.reload()"
+    />
+  } @else if (filtered().length === 0) {
+    <div
+      class="flex flex-col items-center gap-3 rounded-card border border-dashed border-line-strong bg-surface px-6 py-10 text-center"
+    >
+      <span class="flex size-14 items-center justify-center rounded-full bg-sand text-on-accent">
+        <span class="icon text-[24px]" aria-hidden="true">filter_alt_off</span>
+      </span>
+      <p class="text-lg font-semibold">Ningún pedido coincide con el filtro</p>
+      <p class="text-sm text-ink-2">Baja el total mínimo o elige otro usuario.</p>
+      <button
+        type="button"
+        class="h-10 rounded-full border border-outline px-4.5 text-sm font-medium hover:bg-warm"
+        (click)="clearFilters()"
+      >
+        Limpiar filtros
+      </button>
+    </div>
+  } @else {
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      @for (order of filtered(); track order.id) {
+        <app-order-card [order]="order" (viewDetail)="openOrder($event)" />
+      }
+    </div>
+  }
+</section>
