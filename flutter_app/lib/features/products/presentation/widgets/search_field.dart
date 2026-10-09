@@ -13,9 +13,13 @@ class SearchField extends ConsumerStatefulWidget {
 }
 
 class _SearchFieldState extends ConsumerState<SearchField> {
-  late final TextEditingController _controller = TextEditingController(
-    text: ref.read(searchQueryProvider),
-  );
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: ref.read(searchQueryProvider));
+  }
 
   @override
   void dispose() {

@@ -37,7 +37,7 @@ class ProductGrid extends StatelessWidget {
               slivers: [
                 SliverGrid.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: AppLayout.gridColumns,
                     mainAxisSpacing: AppSpacing.gridGap,
                     crossAxisSpacing: AppSpacing.gridGap,
                     mainAxisExtent: AppSizes.productCardHeight,
