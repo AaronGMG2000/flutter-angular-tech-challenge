@@ -22,4 +22,17 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
+
+  it('switches the theme from the top bar', async () => {
+    localStorage.clear();
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const button = (fixture.nativeElement as HTMLElement).querySelector('header button');
+
+    button?.dispatchEvent(new Event('click'));
+    await fixture.whenStable();
+
+    expect(document.documentElement.dataset['theme']).toBe('dark');
+    expect(button?.getAttribute('aria-label')).toBe('Usar tema claro');
+  });
 });
