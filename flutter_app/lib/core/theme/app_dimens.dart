@@ -35,6 +35,11 @@ abstract final class AppSpacing {
   static const double statePadding = 32;
   static const double stateGap = 16;
   static const double stateActionHorizontal = 28;
+  static const double badgeHorizontal = 4;
+  static const double stepperPadding = 4;
+  static const double inCartOffset = 8;
+  static const double inCartHorizontal = 7;
+  static const double inCartGap = 3;
 }
 
 abstract final class AppRadius {
@@ -69,6 +74,10 @@ abstract final class AppSizes {
   static const double detailHeaderHeight = 220;
   static const double detailImage = 200;
   static const double detailRatingStar = 12;
+  static const double stepperValueWidth = 20;
+  static const double stepperCompactValueWidth = 18;
+  static const double stepperCompactIcon = 12;
+  static const double inCartIcon = 12;
   static const double skeletonTagWidth = 140;
   static const double skeletonTitleHeight = 28;
   static const double skeletonLineHeight = 14;
@@ -96,4 +105,10 @@ abstract final class AppDurations {
   static const Duration entrance = Duration(milliseconds: 200);
   static const Duration badgeBounce = Duration(milliseconds: 800);
   static const Duration chipScroll = Duration(milliseconds: 300);
+  static const Duration toast = Duration(milliseconds: 1600);
+}
+
+abstract final class AppOpacity {
+  static const double summaryText = 0.7;
+  static const double summaryBorder = 0.4;
 }

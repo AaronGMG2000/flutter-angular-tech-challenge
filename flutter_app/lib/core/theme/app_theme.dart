@@ -110,6 +110,15 @@ abstract final class AppTheme {
           iconSize: AppSizes.appBarIcon,
         ),
       ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        elevation: 0,
+        backgroundColor: colors.primary,
+        contentTextStyle: textTheme.labelMedium?.copyWith(
+          color: colors.onPrimary,
+        ),
+        shape: pillShape,
+      ),
       progressIndicatorTheme: ProgressIndicatorThemeData(color: colors.link),
       dividerTheme: DividerThemeData(color: colors.borderSubtle, space: 1),
     );

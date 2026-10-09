@@ -1,4 +1,5 @@
 import 'package:catalog/core/theme/index.dart';
+import 'package:catalog/features/cart/presentation/widgets/cart_badge.dart';
 import 'package:catalog/features/products/presentation/providers/category_providers.dart';
 import 'package:catalog/features/products/presentation/providers/product_list_provider.dart';
 import 'package:catalog/features/products/presentation/providers/search_query_provider.dart';
@@ -23,6 +24,8 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppLang.of(context).appTitle),
         titleSpacing: AppSpacing.appBarStart,
+        actionsPadding: const EdgeInsets.only(right: AppSpacing.appBarEnd),
+        actions: [CartBadge(borderColor: context.colors.background)],
       ),
       body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -2,6 +2,7 @@ import 'package:catalog/core/error/failure.dart';
 import 'package:catalog/core/router/app_router.dart';
 import 'package:catalog/core/theme/index.dart';
 import 'package:catalog/features/products/presentation/providers/product_detail_provider.dart';
+import 'package:catalog/features/products/presentation/widgets/detail_bottom_bar.dart';
 import 'package:catalog/features/products/presentation/widgets/product_detail_layout.dart';
 import 'package:catalog/features/products/presentation/widgets/product_detail_skeleton.dart';
 import 'package:catalog/features/products/presentation/widgets/product_detail_view.dart';
@@ -27,6 +28,10 @@ class ProductDetailScreen extends ConsumerWidget {
         error: (error, stackTrace) => ProductDetailError(id: id, error: error),
         data: (product) => ProductDetailView(product: product),
       ),
+      bottomNavigationBar: switch (detail) {
+        AsyncData(:final value) => DetailBottomBar(product: value),
+        _ => null,
+      },
     );
   }
 }

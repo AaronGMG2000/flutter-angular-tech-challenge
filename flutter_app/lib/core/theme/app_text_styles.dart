@@ -36,6 +36,7 @@ abstract final class AppTextStyles {
   static final caption = _body(13, FontWeight.w400);
   static final badge = _body(11, FontWeight.w700);
   static final discount = _body(13, FontWeight.w600);
+  static final quantityCompact = _body(13, FontWeight.w600);
 
   static final textTheme = TextTheme(
     headlineSmall: _body(24, FontWeight.w600),
