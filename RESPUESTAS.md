@@ -16,6 +16,8 @@ const padding = EdgeInsets.all(16);
 const Center(child: CircularProgressIndicator());
 ```
 
+En los constructores de widgets importa porque un widget `const` se crea una sola vez y Flutter reutiliza esa misma instancia. Cuando el padre se reconstruye, Flutter ve que el widget no cambió y no lo vuelve a construir, lo que ahorra trabajo y mejora el rendimiento.
+
 #### 2. Explica el null safety de Dart. ¿Cuándo usarías `?`, `!`, `??` y `late`? ¿Por qué abusar de `!` es una mala práctica?
 
 Con null safety un tipo no acepta `null`, salvo que nosotros lo indiquemos.
@@ -74,7 +76,7 @@ No es correcto usar `ref.read` en `build`: solo mostraría el valor inicial y no
 #### 9. ¿Qué hace el modificador `autoDispose` y qué problema evita? ¿Y `family`?
 
 - **`autoDispose`** destruye el estado del provider cuando nadie lo escucha, por ejemplo al cerrar la pantalla de detalle. Esto evita que la memoria crezca con datos que ya no se ven.
-- **`family`** parametriza un provider, de manera que se pueda acceder a diferentes instancias del mismo provider según el parámetro que se le pase. Por ejemplo, el buscador de la app usa un `family` para manejar el estado de la búsqueda.
+- **`family`** parametriza un provider, de manera que se pueda acceder a diferentes instancias del mismo provider según el parámetro que se le pase. Por ejemplo, la pantalla de detalle usa un `family` para cargar cada producto según su `id`.
 
 #### 10. ¿Cómo manejas los estados de carga, error y datos con `AsyncValue`? Escribe un ejemplo con `.when` o pattern matching.
 
@@ -113,6 +115,8 @@ Un componente **standalone** declara sus propias dependencias en `imports` dentr
 - **Observable**: es un flujo de valores en el tiempo. Es perezoso, hay que suscribirse y tiene operadores para combinar, cancelar o reintentar.
 - **Signal**: es un valor reactivo síncrono que siempre tiene un valor actual. Se lee llamándolo y Angular sabe exactamente qué vista actualizar.
 
+Preferiría un Observable para manejar eventos que pasan en el tiempo, como peticiones HTTP o datos que llegan de forma asíncrona. Un signal lo preferiría para el estado de la vista, como un filtro o un valor que se muestra en pantalla.
+
 #### 14. ¿Para qué sirven `@Input()` / `input()` y `@Output()` / `output()`? ¿Cómo se comunican dos componentes hermanos?
 
 `input()` pasa datos del padre al hijo y `output()` emite eventos del hijo al padre. Dos hermanos se comunican a través del padre común o, si el estado es compartido por varias vistas, con un servicio que expone un signal o un Observable.
@@ -121,7 +125,7 @@ Un componente **standalone** declara sus propias dependencias en `imports` dentr
 
 La inyección de dependencias es una forma de pasar dependencias a un componente, servicio o directiva sin tener que crearlas dentro de él.
 
-`providedIn: 'root'` hace que el servicio sea un singleton disponible en toda la aplicación. Si no se especifica, el servicio solo vive mientras el componente está en memoria y desaparece cuando el componente se destruye, pero si se usa inyectar
+`providedIn: 'root'` hace que el servicio sea un singleton disponible en toda la aplicación. Si en lugar de eso el servicio se declara en los `providers` de un componente, solo vive mientras ese componente está en memoria y desaparece cuando se destruye.
 
 #### 16. ¿Por qué hay que preocuparse por las suscripciones a Observables? Menciona dos formas de evitar fugas de memoria.
 
