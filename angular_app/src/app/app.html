@@ -13,8 +13,19 @@
       Pedidos
     </a>
   </nav>
+  <button
+    type="button"
+    class="ml-auto flex size-9 items-center justify-center rounded-full hover:bg-white/8"
+    [class.text-accent]="isDark()"
+    [attr.aria-label]="isDark() ? 'Usar tema claro' : 'Usar tema oscuro'"
+    (click)="themeService.toggle()"
+  >
+    <span class="icon text-[20px]" aria-hidden="true">{{
+      isDark() ? 'light_mode' : 'dark_mode'
+    }}</span>
+  </button>
   <span
-    class="ml-auto flex size-9 items-center justify-center rounded-full bg-teal text-[13px] font-semibold text-on-accent"
+    class="flex size-9 items-center justify-center rounded-full bg-teal text-[13px] font-semibold text-on-accent"
     aria-hidden="true"
   >
     RM
