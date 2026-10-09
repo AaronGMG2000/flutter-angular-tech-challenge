@@ -1,3 +1,4 @@
+import 'package:catalog/features/cart/presentation/screens/cart_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:catalog/features/products/presentation/screens/product_detail_screen.dart';
@@ -8,6 +9,7 @@ part 'app_router.g.dart';
 abstract final class AppRoutes {
   static const String products = '/';
   static const String productDetail = 'products/:id';
+  static const String cart = '/cart';
 
   static String product(int id) => '/products/$id';
 }
@@ -27,6 +29,10 @@ GoRouter appRouter(Ref ref) {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.cart,
+        builder: (context, state) => const CartScreen(),
       ),
     ],
   );

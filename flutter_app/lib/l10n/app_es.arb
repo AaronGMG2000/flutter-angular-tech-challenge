@@ -49,6 +49,9 @@
     }
   },
   "addToCart": "Agregar al carrito",
+  "addedToCart": "Agregado al carrito",
+  "decrease": "Menos",
+  "increase": "Más",
   "productErrorTitle": "No pudimos cargar este producto",
   "productErrorMessage": "El producto #{id} no existe o no está disponible.",
   "@productErrorMessage": {
@@ -72,6 +75,15 @@
     }
   },
   "cartTotal": "Total",
+  "inCart": "{count, plural, =1{1 en el carrito} other{{count} en el carrito}}",
+  "@inCart": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "clearCart": "Vaciar carrito",
-  "cartEmpty": "Tu carrito está vacío"
+  "cartEmpty": "Tu carrito está vacío",
+  "cartEmptyMessage": "Agrega productos desde el catálogo.",
+  "goToCatalog": "Ver catálogo",
+  "removeFromCart": "Eliminar"
 }

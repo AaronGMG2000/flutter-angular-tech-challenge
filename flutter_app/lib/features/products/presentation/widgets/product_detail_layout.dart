@@ -1,5 +1,6 @@
 import 'package:catalog/core/router/app_router.dart';
 import 'package:catalog/core/theme/index.dart';
+import 'package:catalog/features/cart/presentation/widgets/cart_badge.dart';
 import 'package:catalog/l10n/app_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +29,7 @@ class ProductDetailLayout extends StatelessWidget {
               bottom: false,
               child: Column(
                 children: [
-                  const DetailTopBar(),
+                  const DetailTopBar(overImage: true),
                   SizedBox(
                     height:
                         AppSizes.detailHeaderHeight + AppSpacing.sheetOverlap,
@@ -68,7 +69,9 @@ class ProductDetailLayout extends StatelessWidget {
 }
 
 class DetailTopBar extends StatelessWidget {
-  const DetailTopBar({super.key});
+  const DetailTopBar({this.overImage = false, super.key});
+
+  final bool overImage;
 
   void _back(BuildContext context) {
     if (context.canPop()) {
@@ -80,6 +83,8 @@ class DetailTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return SizedBox(
       height: AppSizes.appBarHeight,
       child: Padding(
@@ -92,6 +97,10 @@ class DetailTopBar extends StatelessWidget {
               tooltip: AppLang.of(context).back,
               onPressed: () => _back(context),
               icon: const Icon(Icons.arrow_back),
+            ),
+            const Spacer(),
+            CartBadge(
+              borderColor: overImage ? colors.imageSurface : colors.background,
             ),
           ],
         ),

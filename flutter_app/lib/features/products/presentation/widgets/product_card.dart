@@ -1,39 +1,58 @@
 import 'package:catalog/core/theme/index.dart';
 import 'package:catalog/core/utils/app_formats.dart';
+import 'package:catalog/features/cart/presentation/widgets/in_cart_pill.dart';
 import 'package:catalog/features/products/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({required this.product, required this.onTap, super.key});
+  const ProductCard({
+    required this.product,
+    required this.onTap,
+    this.cartQuantity = 0,
+    super.key,
+  });
 
   final Product product;
   final VoidCallback onTap;
+  final int cartQuantity;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
 
     return Card(
+      shape: InCartShape.of(context, inCart: cartQuantity > 0),
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: ColoredBox(
-                color: colors.imageSurface,
-                child: Center(
-                  child: Image.network(
-                    product.thumbnail,
-                    width: AppSizes.productCardImage,
-                    height: AppSizes.productCardImage,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) => Icon(
-                      Icons.image_not_supported,
-                      color: colors.textTertiary,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ColoredBox(
+                    color: colors.imageSurface,
+                    child: Center(
+                      child: Image.network(
+                        product.thumbnail,
+                        width: AppSizes.productCardImage,
+                        height: AppSizes.productCardImage,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) => Icon(
+                          Icons.image_not_supported,
+                          color: colors.textTertiary,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  if (cartQuantity > 0)
+                    Positioned(
+                      top: AppSpacing.inCartOffset,
+                      right: AppSpacing.inCartOffset,
+                      child: InCartPill(quantity: cartQuantity),
+                    ),
+                ],
               ),
             ),
             Padding(

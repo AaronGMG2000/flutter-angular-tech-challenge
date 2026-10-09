@@ -47,9 +47,10 @@ class ProductRemoteDataSource {
 
   Future<List<ProductCategoryDto>> fetchCategories() async {
     final response = await _dio.get<List<dynamic>>('/products/categories');
-    return _requireData(
-      response,
-    ).cast<Map<String, dynamic>>().map(ProductCategoryDto.fromJson).toList();
+    return _requireData(response)
+        .cast<Map<String, dynamic>>()
+        .map(ProductCategoryDto.fromJson)
+        .toList();
   }
 
   Future<ProductsResponseDto> _fetchPage(
