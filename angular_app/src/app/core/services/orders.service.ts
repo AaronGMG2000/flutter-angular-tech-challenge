@@ -16,4 +16,8 @@ export class OrdersService {
       .get<CartsResponse>(`${this.baseUrl}/carts`, { params: { limit: ALL_RESULTS } })
       .pipe(map((response) => response.carts));
   }
+
+  getOrder(id: number): Observable<Cart> {
+    return this.http.get<Cart>(`${this.baseUrl}/carts/${id}`);
+  }
 }
