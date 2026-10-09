@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:catalog/core/router/app_router.dart';
 import 'package:catalog/core/theme/app_theme.dart';
+import 'package:catalog/core/theme/theme_mode_provider.dart';
 import 'package:catalog/l10n/app_lang.dart';
 
 class App extends ConsumerWidget {
@@ -16,7 +17,7 @@ class App extends ConsumerWidget {
       supportedLocales: AppLang.supportedLocales,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.light,
+      themeMode: ref.watch(themeModeProvider),
       routerConfig: ref.watch(appRouterProvider),
     );
   }

@@ -1,6 +1,7 @@
 {
   "@@locale": "es",
   "appTitle": "Mini catálogo",
+  "toggleTheme": "Cambiar tema",
   "searchHint": "Buscar productos",
   "categoryAll": "Todas",
   "searchResultsCount": "{count, plural, =1{1 resultado para “{query}”} other{{count} resultados para “{query}”}}",

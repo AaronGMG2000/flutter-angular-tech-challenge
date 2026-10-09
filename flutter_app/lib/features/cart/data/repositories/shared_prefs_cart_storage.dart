@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:catalog/core/storage/preferences_provider.dart';
 import 'package:catalog/features/cart/data/models/cart_item_dto.dart';
 import 'package:catalog/features/cart/domain/entities/cart_item.dart';
 import 'package:catalog/features/cart/domain/repositories/cart_storage.dart';
@@ -40,5 +41,5 @@ class SharedPrefsCartStorage implements CartStorage {
 
 @Riverpod(keepAlive: true)
 CartStorage cartStorage(Ref ref) {
-  return SharedPrefsCartStorage(SharedPreferencesAsync());
+  return SharedPrefsCartStorage(ref.watch(preferencesProvider));
 }
