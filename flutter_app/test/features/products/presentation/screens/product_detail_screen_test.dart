@@ -124,4 +124,19 @@ void main() {
     expect(find.byType(ProductDetailScreen), findsNothing);
     expect(find.byType(ProductCard), findsOneWidget);
   });
+
+  testWidgets('adds the selected quantity to the cart', (tester) async {
+    when(() => repository.getProductById(7)).thenAnswer((_) async => product);
+
+    await pumpDetail(tester, 7);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip(lang.increase));
+    await tester.tap(find.byTooltip(lang.increase));
+    await tester.pump();
+    await tester.tap(find.text(lang.addToCart));
+    await tester.pump();
+
+    expect(find.text(lang.addedToCart), findsOneWidget);
+    expect(find.text('3'), findsNWidgets(2));
+  });
 }

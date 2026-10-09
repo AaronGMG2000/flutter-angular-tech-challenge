@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:catalog/core/error/failure.dart';
 import 'package:catalog/core/theme/app_theme.dart';
+import 'package:catalog/features/cart/presentation/providers/cart_provider.dart';
+import 'package:catalog/features/cart/presentation/widgets/in_cart_pill.dart';
 import 'package:catalog/features/products/data/repositories/product_repository_impl.dart';
 import 'package:catalog/features/products/domain/entities/product.dart';
 import 'package:catalog/features/products/domain/entities/product_category.dart';
@@ -228,5 +230,25 @@ void main() {
       () => repository.getProductsByCategory('smartphones', skip: 0, limit: 20),
     ).called(1);
     expect(find.byIcon(Icons.close), findsOneWidget);
+  });
+
+  testWidgets('marks cards with the quantity already in cart', (tester) async {
+    stubProducts(() async => page);
+
+    await pumpScreen(tester);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(InCartPill), findsNothing);
+
+    ProviderScope.containerOf(tester.element(find.byType(ProductCard)))
+        .read(cartProvider.notifier)
+        .add(product, quantity: 2);
+    await tester.pump();
+
+    expect(
+      find.descendant(of: find.byType(InCartPill), matching: find.text('2')),
+      findsOneWidget,
+    );
+    expect(find.bySemanticsLabel(RegExp(lang.inCart(2))), findsOneWidget);
   });
 }
