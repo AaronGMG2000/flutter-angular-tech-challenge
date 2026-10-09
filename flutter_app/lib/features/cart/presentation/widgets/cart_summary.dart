@@ -57,7 +57,7 @@ class CartSummary extends ConsumerWidget {
               ],
             ),
             OutlinedButton(
-              onPressed: ref.read(cartProvider.notifier).clear,
+              onPressed: () => ref.read(cartProvider.notifier).clear(),
               style: OutlinedButton.styleFrom(
                 foregroundColor: colors.onCartSummary,
                 side: BorderSide(

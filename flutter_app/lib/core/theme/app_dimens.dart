@@ -41,6 +41,11 @@ abstract final class AppSpacing {
   static const double inCartOffset = 8;
   static const double inCartHorizontal = 7;
   static const double inCartGap = 3;
+  static const double cartButtonStart = 13;
+  static const double cartButtonEnd = 16;
+  static const double cartButtonGap = 10;
+  static const double cartCountTop = -10;
+  static const double cartCountEnd = -12;
 }
 
 abstract final class AppRadius {

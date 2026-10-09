@@ -12,7 +12,6 @@ class CategoryChips extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final categories = ref.watch(categoriesProvider).value ?? const [];
     final selected = ref.watch(selectedCategoryProvider);
-    final notifier = ref.read(selectedCategoryProvider.notifier);
 
     return SizedBox(
       height: AppSizes.chipHeight,
@@ -31,7 +30,7 @@ class CategoryChips extends ConsumerWidget {
                 label: Text(AppLang.of(context).categoryAll),
                 selected: selected == null,
                 onSelected: (_) {
-                  notifier.clear();
+                  ref.read(selectedCategoryProvider.notifier).clear();
                   _centerChip(chipContext);
                 },
               ),
@@ -41,7 +40,8 @@ class CategoryChips extends ConsumerWidget {
           return _CategoryChip(
             category: category,
             selected: category == selected,
-            onSelected: () => notifier.toggle(category),
+            onSelected: () =>
+                ref.read(selectedCategoryProvider.notifier).toggle(category),
           );
         },
       ),

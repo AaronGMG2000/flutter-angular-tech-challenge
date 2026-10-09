@@ -63,10 +63,11 @@
   "backToCatalog": "Volver al catálogo",
   "back": "Volver",
   "cartTitle": "Carrito",
-  "cartUnits": "{count, plural, =1{1 unidad} other{{count} unidades}}",
-  "@cartUnits": {
+  "cartBadgeLabel": "Carrito: {count, plural, =1{1 producto} other{{count} productos}}, total {total}",
+  "@cartBadgeLabel": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": { "type": "int" },
+      "total": { "type": "String" }
     }
   },
   "cartSubtotal": "Subtotal ({count})",

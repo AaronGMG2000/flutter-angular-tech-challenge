@@ -15,7 +15,6 @@ class CartItemTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cart = ref.read(cartProvider.notifier);
     final colors = context.colors;
 
     return Card(
@@ -44,7 +43,9 @@ class CartItemTile extends ConsumerWidget {
                       ),
                       IconButton(
                         tooltip: AppLang.of(context).removeFromCart,
-                        onPressed: () => cart.remove(item.productId),
+                        onPressed: () => ref
+                            .read(cartProvider.notifier)
+                            .remove(item.productId),
                         style: IconButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           foregroundColor: colors.textTertiary,
@@ -63,14 +64,12 @@ class CartItemTile extends ConsumerWidget {
                       QuantityStepper(
                         compact: true,
                         quantity: item.quantity,
-                        onDecrement: () => cart.updateQuantity(
-                          item.productId,
-                          item.quantity - 1,
-                        ),
-                        onIncrement: () => cart.updateQuantity(
-                          item.productId,
-                          item.quantity + 1,
-                        ),
+                        onDecrement: () => ref
+                            .read(cartProvider.notifier)
+                            .updateQuantity(item.productId, item.quantity - 1),
+                        onIncrement: () => ref
+                            .read(cartProvider.notifier)
+                            .updateQuantity(item.productId, item.quantity + 1),
                       ),
                     ],
                   ),

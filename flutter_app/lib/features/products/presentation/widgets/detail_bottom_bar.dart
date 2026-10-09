@@ -18,7 +18,6 @@ class DetailBottomBar extends ConsumerWidget {
     final colors = context.colors;
     final quantityProvider = detailQuantityProvider(product.id);
     final quantity = ref.watch(quantityProvider);
-    final notifier = ref.read(quantityProvider.notifier);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -37,8 +36,11 @@ class DetailBottomBar extends ConsumerWidget {
           children: [
             QuantityStepper(
               quantity: quantity,
-              onDecrement: quantity > 1 ? notifier.decrement : null,
-              onIncrement: notifier.increment,
+              onDecrement: quantity > 1
+                  ? () => ref.read(quantityProvider.notifier).decrement()
+                  : null,
+              onIncrement: () =>
+                  ref.read(quantityProvider.notifier).increment(),
             ),
             Expanded(
               child: FilledButton.icon(

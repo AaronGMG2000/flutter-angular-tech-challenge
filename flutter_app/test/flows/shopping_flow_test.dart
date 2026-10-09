@@ -1,6 +1,7 @@
 import 'package:catalog/app.dart';
 import 'package:catalog/core/theme/index.dart';
 import 'package:catalog/features/cart/presentation/screens/cart_screen.dart';
+import 'package:catalog/features/cart/presentation/widgets/cart_badge.dart';
 import 'package:catalog/features/products/data/repositories/product_repository_impl.dart';
 import 'package:catalog/features/products/domain/entities/product.dart';
 import 'package:catalog/features/products/domain/entities/product_page.dart';
@@ -44,8 +45,9 @@ void main() {
     images: [],
   );
 
-  testWidgets('search, add from the list, add from detail and pay attention '
-      'to the total', (tester) async {
+  testWidgets('search, open the result, add it and check the cart total', (
+    tester,
+  ) async {
     final repository = _MockProductRepository();
     when(() => repository.getCategories()).thenAnswer((_) async => const []);
     when(() => repository.getProducts(skip: 0, limit: 20)).thenAnswer(
@@ -61,7 +63,7 @@ void main() {
           (_) async =>
               const ProductPage(items: [iphone], total: 1, skip: 0, limit: 0),
         );
-    when(() => repository.getProductById(1)).thenAnswer((_) async => mascara);
+    when(() => repository.getProductById(2)).thenAnswer((_) async => iphone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -77,27 +79,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ProductListTile), findsOneWidget);
 
-    await tester.tap(find.byTooltip(lang.addToCart));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip(lang.addToCart));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byTooltip(lang.clearSearchTooltip));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(mascara.title));
+    await tester.tap(find.text(iphone.title));
     await tester.pumpAndSettle();
     expect(find.byType(ProductDetailScreen), findsOneWidget);
+    verify(() => repository.getProductById(2)).called(1);
 
     await tester.tap(find.byTooltip(lang.increase));
     await tester.pump();
     await tester.tap(find.text(lang.addToCart));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip(lang.cartTitle));
+    final badge = find.byType(CartBadge);
+    expect(
+      find.descendant(of: badge, matching: find.text('2')),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: badge, matching: find.text(r'$2.199,98')),
+      findsOneWidget,
+    );
+
+    await tester.tap(badge);
     await tester.pumpAndSettle();
     expect(find.byType(CartScreen), findsOneWidget);
-    expect(find.text(lang.cartUnits(4)), findsOneWidget);
-    expect(find.text(r'$2.219,96'), findsNWidgets(2));
+    expect(find.text(r'$2.199,98'), findsNWidgets(4));
 
     await tester.pump(AppDurations.toast);
     await tester.pumpAndSettle();
