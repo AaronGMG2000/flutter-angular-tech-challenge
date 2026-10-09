@@ -6,6 +6,7 @@ abstract final class AppSpacing {
   static const double headerGap = 12;
   static const double appBarStart = 20;
   static const double appBarEnd = 16;
+  static const double appBarActionsGap = 4;
   static const double gridGap = 12;
   static const double listGap = 10;
   static const double chipGap = 8;
@@ -62,6 +63,7 @@ abstract final class AppSizes {
   static const double stepperCompactHeight = 32;
   static const double badgeMinSize = 20;
   static const double appBarIcon = 17;
+  static const double themeIcon = 18;
   static const double ratingStar = 10;
   static const double stateIconCircle = 72;
   static const double productCardImageArea = 120;

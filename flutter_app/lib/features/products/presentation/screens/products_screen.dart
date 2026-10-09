@@ -12,6 +12,7 @@ import 'package:catalog/features/products/presentation/widgets/search_field.dart
 import 'package:catalog/features/products/presentation/widgets/search_status_text.dart';
 import 'package:catalog/l10n/app_lang.dart';
 import 'package:catalog/shared/widgets/state_view.dart';
+import 'package:catalog/shared/widgets/theme_toggle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,7 +26,11 @@ class ProductsScreen extends StatelessWidget {
         title: Text(AppLang.of(context).appTitle),
         titleSpacing: AppSpacing.appBarStart,
         actionsPadding: const EdgeInsets.only(right: AppSpacing.appBarEnd),
-        actions: [CartBadge(borderColor: context.colors.background)],
+        actions: [
+          const ThemeToggleButton(),
+          const SizedBox(width: AppSpacing.appBarActionsGap),
+          CartBadge(borderColor: context.colors.background),
+        ],
       ),
       body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
