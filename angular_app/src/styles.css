@@ -40,6 +40,38 @@
   --app-error-text: #790202;
 }
 
+[data-theme='dark'] {
+  color-scheme: dark;
+  --app-bg: #0f1c14;
+  --app-surface: #123726;
+  --app-warm: #253829;
+  --app-thumb: #e7debd;
+  --app-line: #253829;
+  --app-line-strong: #374a3e;
+  --app-skeleton: #253829;
+  --app-ink: #ffffff;
+  --app-ink-2: #c9d6ce;
+  --app-ink-3: #8aa396;
+  --app-icon: #8aa396;
+  --app-link: #5ffff3;
+  --app-bar: #123726;
+  --app-bar-line: #253829;
+  --app-primary: #5ffff3;
+  --app-on-primary: #042914;
+  --app-outline: #5ffff3;
+  --app-success-bg: #253829;
+  --app-success: #4ff798;
+  --app-success-strong: #4ff798;
+  --app-kpi: #253829;
+  --app-table-head: #0f1c14;
+  --app-error-bg: #310202;
+  --app-error-line: #790202;
+  --app-error-circle: #510101;
+  --app-error-icon: #fd8a8a;
+  --app-error-title: #febdbd;
+  --app-error-text: #fd8a8a;
+}
+
 @theme inline {
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Alumni Sans', 'Arial Narrow', sans-serif;
